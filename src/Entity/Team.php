@@ -20,6 +20,13 @@ class Team
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $creationDate = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $coach = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $sport = null;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -48,4 +55,30 @@ class Team
 
         return $this;
     }
+
+    public function getCoach(): ?string
+    {
+        return $this->coach;
+    }
+
+    public function setCoach(string $coach): static
+    {
+        $this->coach = $coach;
+
+        return $this;
+    }
+
+    public function getSport(): ?string
+    {
+        return $this->sport;
+    }
+
+    public function setSport(string $sport): static
+    {
+        $this->sport = $sport;
+
+        return $this;
+    }
+
+
 }
