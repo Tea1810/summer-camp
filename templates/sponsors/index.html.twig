@@ -11,6 +11,7 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>CommercialZone</th>
+                <th>Sponsored Teams</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -20,6 +21,13 @@
                 <td>{{ sponsor.id }}</td>
                 <td>{{ sponsor.name }}</td>
                 <td>{{ sponsor.commercialZone }}</td>
+
+                    {% if sponsor.teams|length == 0 %}
+                    <td>No Teams</td>
+                {% else %}
+                    {% for teamToShow in sponsor.teams %}
+                <td>{{teamToShow }}</td>
+                {% endfor %}{% endif %}
                 <td>
                     <a href="{{ path('app_sponsors_show', {'id': sponsor.id}) }}">show</a>
                     <a href="{{ path('app_sponsors_edit', {'id': sponsor.id}) }}">edit</a>
@@ -30,6 +38,7 @@
                 <td colspan="4">no records found</td>
             </tr>
         {% endfor %}
+
         </tbody>
     </table>
 

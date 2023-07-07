@@ -23,6 +23,10 @@ class Sponsors
 
     #[ORM\Column(length: 255)]
     private ?string $commercialZone = null;
+    public function __toString()
+    {
+        return $this->getName();
+    }
 
     public function __construct()
     {

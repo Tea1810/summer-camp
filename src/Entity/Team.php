@@ -40,7 +40,6 @@ class Team
 
     #[ORM\OneToMany(mappedBy: 'team', targetEntity: Player::class)]
     private Collection $players;
-
     public function __construct()
     {
         $this->Members = new ArrayCollection();
@@ -103,7 +102,10 @@ class Team
 
         return $this;
     }
-
+    public function __toString()
+    {
+        return $this->getName();
+    }
     /**
      * @return Collection<int, Matches>
      */

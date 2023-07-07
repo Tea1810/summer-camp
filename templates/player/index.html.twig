@@ -9,19 +9,21 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Role</th>
+                <th>Name</th>
                 <th>Age</th>
                 <th>Nationality</th>
-                <th>actions</th>
+                <th>Role</th>
+
             </tr>
         </thead>
         <tbody>
         {% for player in players %}
             <tr>
                 <td>{{ player.id }}</td>
-                <td>{{ player.role }}</td>
+                <td>{{ player.name }}</td>
                 <td>{{ player.age }}</td>
                 <td>{{ player.nationality }}</td>
+                <td>{{ player.role }}</td>
                 <td>
                     <a href="{{ path('app_player_show', {'id': player.id}) }}">show</a>
                     <a href="{{ path('app_player_edit', {'id': player.id}) }}">edit</a>

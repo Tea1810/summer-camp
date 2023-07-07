@@ -12,16 +12,24 @@
                 <th>Score1</th>
                 <th>Score2</th>
                 <th>Date</th>
+                <th>Winner of the match</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for match in matches %}
-            <tr>
+            <td>
                 <td>{{ match.id }}</td>
                 <td>{{ match.score1 }}</td>
                 <td>{{ match.score2 }}</td>
                 <td>{{ match.date ? match.date|date('Y-m-d H:i:s') : '' }}</td>
+               <td> {% if match.score1>match.score2 %}
+                    <td>{{ match.team1 }}</td>
+                {% elseif match.score1<match.score2%}
+                        <td>{{ match.team2 }}</td>
+                    {% else %} <td>Equal</td>
+
+                {% endif %}</td>
                 <td>
                     <a href="{{ path('app_matches_show', {'id': match.id}) }}">show</a>
                     <a href="{{ path('app_matches_edit', {'id': match.id}) }}">edit</a>

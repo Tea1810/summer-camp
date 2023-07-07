@@ -17,6 +17,7 @@ class MatchesType extends AbstractType
             ->add('date')
             ->add('team1')
             ->add('team2')
+
         ;
     }
 
