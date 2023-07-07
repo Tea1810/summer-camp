@@ -28,8 +28,6 @@ class Team
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $nationalTitle = null;
 
-    #[ORM\OneToMany(mappedBy: 'team', targetEntity: Member::class)]
-    private Collection $Members;
 
     #[ORM\OneToMany(mappedBy: 'team1', targetEntity: Matches::class, orphanRemoval: true)]
     private Collection $HomeGames;
@@ -40,12 +38,16 @@ class Team
     #[ORM\ManyToMany(targetEntity: Sponsors::class, mappedBy: 'teams')]
     private Collection $teamSponsors;
 
+    #[ORM\OneToMany(mappedBy: 'team', targetEntity: Player::class)]
+    private Collection $players;
+
     public function __construct()
     {
         $this->Members = new ArrayCollection();
         $this->HomeGames = new ArrayCollection();
         $this->AwayGames = new ArrayCollection();
         $this->teamSponsors = new ArrayCollection();
+        $this->players = new ArrayCollection();
     }
 
 
@@ -98,36 +100,6 @@ class Team
     public function setNationalTitle(?string $nationalTitle): static
     {
         $this->nationalTitle = $nationalTitle;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Member>
-     */
-    public function getMembers(): Collection
-    {
-        return $this->Members;
-    }
-
-    public function addMember(Member $member): static
-    {
-        if (!$this->Members->contains($member)) {
-            $this->Members->add($member);
-            $member->setTeam($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMember(Member $member): static
-    {
-        if ($this->Members->removeElement($member)) {
-            // set the owning side to null (unless already changed)
-            if ($member->getTeam() === $this) {
-                $member->setTeam(null);
-            }
-        }
 
         return $this;
     }
@@ -214,6 +186,36 @@ class Team
     {
         if ($this->teamSponsors->removeElement($teamSponsor)) {
             $teamSponsor->removeTeam($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Player>
+     */
+    public function getPlayers(): Collection
+    {
+        return $this->players;
+    }
+
+    public function addPlayer(Player $player): static
+    {
+        if (!$this->players->contains($player)) {
+            $this->players->add($player);
+            $player->setTeam($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayer(Player $player): static
+    {
+        if ($this->players->removeElement($player)) {
+            // set the owning side to null (unless already changed)
+            if ($player->getTeam() === $this) {
+                $player->setTeam(null);
+            }
         }
 
         return $this;

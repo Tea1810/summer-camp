@@ -16,11 +16,11 @@ class Matches
 
     #[ORM\ManyToOne(inversedBy: 'HomeGames')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?team $team1 = null;
+    private ?Team $team1 = null;
 
     #[ORM\ManyToOne(inversedBy: 'AwayGames')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?team $team2 = null;
+    private ?Team $team2 = null;
 
     #[ORM\Column]
     private ?int $score1 = null;
@@ -36,24 +36,24 @@ class Matches
         return $this->id;
     }
 
-    public function getTeam1(): ?team
+    public function getTeam1(): ?Team
     {
         return $this->team1;
     }
 
-    public function setTeam1(?team $team1): static
+    public function setTeam1(?Team $team1): static
     {
         $this->team1 = $team1;
 
         return $this;
     }
 
-    public function getTeam2(): ?team
+    public function getTeam2(): ?Team
     {
         return $this->team2;
     }
 
-    public function setTeam2(?team $team2): static
+    public function setTeam2(?Team $team2): static
     {
         $this->team2 = $team2;
 

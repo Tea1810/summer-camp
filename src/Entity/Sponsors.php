@@ -15,7 +15,7 @@ class Sponsors
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToMany(targetEntity: team::class, inversedBy: 'teamSponsors')]
+    #[ORM\ManyToMany(targetEntity: Team::class, inversedBy: 'teamSponsors')]
     private Collection $teams;
 
     #[ORM\Column(length: 255)]
@@ -35,14 +35,14 @@ class Sponsors
     }
 
     /**
-     * @return Collection<int, team>
+     * @return Collection<int, Team>
      */
     public function getTeams(): Collection
     {
         return $this->teams;
     }
 
-    public function addTeam(team $team): static
+    public function addTeam(Team $team): static
     {
         if (!$this->teams->contains($team)) {
             $this->teams->add($team);
@@ -51,7 +51,7 @@ class Sponsors
         return $this;
     }
 
-    public function removeTeam(team $team): static
+    public function removeTeam(Team $team): static
     {
         $this->teams->removeElement($team);
 
