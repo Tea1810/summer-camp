@@ -3,30 +3,33 @@
 {% block title %}Player index{% endblock %}
 
 {% block body %}
-    <h1>Player index</h1>
+    <h1>Players</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Nationality</th>
-                <th>Role</th>
+
+                <th style="text-align: center;">Name</th>
+                <th style="text-align: center;">Age</th>
+                <th style="text-align: center;">Nationality</th>
+                <th style="text-align: center;">Role</th>
+                <th style="text-align: center;">Actions</th>
 
             </tr>
         </thead>
         <tbody>
         {% for player in players %}
             <tr>
-                <td>{{ player.id }}</td>
-                <td>{{ player.name }}</td>
-                <td>{{ player.age }}</td>
-                <td>{{ player.nationality }}</td>
-                <td>{{ player.role }}</td>
-                <td>
-                    <a href="{{ path('app_player_show', {'id': player.id}) }}">show</a>
-                    <a href="{{ path('app_player_edit', {'id': player.id}) }}">edit</a>
+
+                <td style="text-align: center;">{{ player.name }}</td>
+                <td style="text-align: center;">{{ player.age }}</td>
+                <td style="text-align: center;">{{ player.nationality }}</td>
+                <td style="text-align: center;">{{ player.role }}</td>
+                <td style="text-align: center;">
+                    <ul style="list-style: none;">
+                  <li>  <a href="{{ path('app_player_show', {'id': player.id}) }}" class="no_link">show</a></li>
+                  <li>  <a href="{{ path('app_player_edit', {'id': player.id}) }}" class="no_link">edit</a></li>
+                    </ul>
                 </td>
             </tr>
         {% else %}
@@ -37,5 +40,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_player_new') }}">Create new</a>
+<button class="btn btn-outline-secondary"> <a href="{{ path('app_player_new') }}"class="custom-link-button">Add new player</a></button>
 {% endblock %}

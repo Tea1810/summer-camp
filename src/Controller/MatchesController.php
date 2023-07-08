@@ -13,11 +13,16 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/matches')]
 class MatchesController extends AbstractController
 {
+    public function __construct(HomeMenu $menuPage)
+    {
+        $this->menuPage = $menuPage;
+    }
     #[Route('/', name: 'app_matches_index', methods: ['GET'])]
     public function index(MatchesRepository $matchesRepository): Response
-    {
+    {    $menu = $this->menuPage->createMenu();
         return $this->render('matches/index.html.twig', [
             'matches' => $matchesRepository->findAll(),
+            'menu' =>$menu,
         ]);
     }
 

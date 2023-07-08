@@ -13,14 +13,23 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/team')]
 class TeamController extends AbstractController
 {
+    private $menuPage;
+
+    public function __construct(HomeMenu $menuPage)
+    {
+        $this->menuPage = $menuPage;
+    }
+
     #[Route('/', name: 'app_team_index', methods: ['GET'])]
     public function index(TeamRepository $teamRepository): Response
     {
+        $menu = $this->menuPage->createMenu();
+
         return $this->render('team/index.html.twig', [
             'teams' => $teamRepository->findAll(),
+            'menu' => $menu,
         ]);
     }
-
     #[Route('/new', name: 'app_team_new', methods: ['GET', 'POST'])]
     public function new(Request $request, TeamRepository $teamRepository): Response
     {

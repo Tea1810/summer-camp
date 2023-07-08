@@ -1,38 +1,63 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Matches index{% endblock %}
+{% block title %}Matches{% endblock %}
 
 {% block body %}
-    <h1>Matches index</h1>
+    <nav class="navbar navbar-expand-lg navbar-light custom-navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" >Sportsly</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{{ path('app_home_page20') }}" >Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_team_index') }}">Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_matches_index') }}">Matches</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_sponsors_index') }}">Sponsors</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <h1>Matches</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Score1</th>
-                <th>Score2</th>
-                <th>Date</th>
-                <th>Winner of the match</th>
-                <th>actions</th>
+
+                <th style="text-align: center;">Home Team score</th>
+                <th style="text-align: center;">Away Team score</th>
+                <th style="text-align: center;">Date of the game</th>
+                <th style="text-align: center;">Winner of the match</th>
+                <th style="text-align: center;">Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for match in matches %}
-            <td>
-                <td>{{ match.id }}</td>
-                <td>{{ match.score1 }}</td>
-                <td>{{ match.score2 }}</td>
-                <td>{{ match.date ? match.date|date('Y-m-d H:i:s') : '' }}</td>
-               <td> {% if match.score1>match.score2 %}
-                    <td>{{ match.team1 }}</td>
+                <td style="text-align: center;">{{ match.score1 }}</td>
+                <td style="text-align: center;">{{ match.score2 }}</td>
+                <td style="text-align: center;">{{ match.date ? match.date|date('Y-m-d H:i:s') : '' }}</td>
+                {% if match.score1>match.score2 %}
+                    <td style="text-align: center;">{{ match.team1 }}</td>
                 {% elseif match.score1<match.score2%}
-                        <td>{{ match.team2 }}</td>
-                    {% else %} <td>Equal</td>
+                        <td style="text-align: center;">{{ match.team2 }}</td>
+                    {% else %} <td style="text-align: center;">Equal</td>
 
-                {% endif %}</td>
-                <td>
-                    <a href="{{ path('app_matches_show', {'id': match.id}) }}">show</a>
-                    <a href="{{ path('app_matches_edit', {'id': match.id}) }}">edit</a>
+                {% endif %}
+                <td style="text-align: center;">
+                  <ul style="list-style: none;">
+                   <li> <a href="{{ path('app_matches_show', {'id': match.id}) }}" class="no_link">show</a></li>
+                   <li> <a href="{{ path('app_matches_edit', {'id': match.id}) }}" class="no_link">edit</a></li>
+                  </ul>
                 </td>
             </tr>
         {% else %}
@@ -43,5 +68,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_matches_new') }}">Create new</a>
+    <button class="btn custom-button"> <a href="{{ path('app_matches_new') }}" class="custom-link-button">Add new match</a></button>
+
 {% endblock %}

@@ -13,11 +13,17 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/sponsors')]
 class SponsorsController extends AbstractController
 {
+    public function __construct(HomeMenu $menuPage)
+    {
+        $this->menuPage = $menuPage;
+    }
+
     #[Route('/', name: 'app_sponsors_index', methods: ['GET'])]
     public function index(SponsorsRepository $sponsorsRepository): Response
-    {
+    {   $menu = $this->menuPage->createMenu();
         return $this->render('sponsors/index.html.twig', [
             'sponsors' => $sponsorsRepository->findAll(),
+            'menu' => $menu,
         ]);
     }
 

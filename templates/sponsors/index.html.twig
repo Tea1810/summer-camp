@@ -1,36 +1,66 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Sponsors index{% endblock %}
+{% block title %}Sponsors{% endblock %}
 
 {% block body %}
-    <h1>Sponsors index</h1>
+    <nav class="navbar navbar-expand-lg navbar-light custom-navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" >Sportsly</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{{ path('app_home_page20') }}" >Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_team_index') }}">Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_matches_index') }}">Matches</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_sponsors_index') }}">Sponsors</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <h1>Sponsors</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>CommercialZone</th>
-                <th>Sponsored Teams</th>
-                <th>actions</th>
+                <th style="text-align: center;">Company</th>
+                <th style="text-align: center;">Commercials appear on</th>
+                <th style="text-align: center;">Sponsored Teams</th>
+                <th style="text-align: center;">Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for sponsor in sponsors %}
             <tr>
-                <td>{{ sponsor.id }}</td>
-                <td>{{ sponsor.name }}</td>
-                <td>{{ sponsor.commercialZone }}</td>
 
+                <td style="text-align: center;">{{ sponsor.name }}</td>
+                <td style="text-align: center;">{{ sponsor.commercialZone }}</td>
+                 <td style="text-align: center;">
                     {% if sponsor.teams|length == 0 %}
-                    <td>No Teams</td>
+                     <ul style="list-style: none;">
+                    <li>No Teams</li>
+                     </ul>
                 {% else %}
+                    <ul style="list-style: none;">
                     {% for teamToShow in sponsor.teams %}
-                <td>{{teamToShow }}</td>
-                {% endfor %}{% endif %}
-                <td>
-                    <a href="{{ path('app_sponsors_show', {'id': sponsor.id}) }}">show</a>
-                    <a href="{{ path('app_sponsors_edit', {'id': sponsor.id}) }}">edit</a>
+                        <li>{{teamToShow }}</li>
+                      {% endfor %}
+                    </ul>
+                    {% endif %}</td>
+                <td style="text-align: center;">
+                    <ul style="list-style: none;">
+                   <li> <a href="{{ path('app_sponsors_show', {'id': sponsor.id}) }}" class="no_link">see sponsor</a></li>
+                   <li> <a href="{{ path('app_sponsors_edit', {'id': sponsor.id}) }}" class="no_link">edit</a></ul></li>
                 </td>
             </tr>
         {% else %}
@@ -42,5 +72,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_sponsors_new') }}">Create new</a>
+    <button class="btn custom-button"><a href="{{ path('app_sponsors_new') }}" class="custom-link-button">Add new sponsor</a></button>
 {% endblock %}

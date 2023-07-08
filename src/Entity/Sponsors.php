@@ -50,6 +50,7 @@ class Sponsors
     {
         if (!$this->teams->contains($team)) {
             $this->teams->add($team);
+          //  $team->addTeamSponsor($this);
         }
 
         return $this;

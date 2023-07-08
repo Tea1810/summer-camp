@@ -1,34 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Team index{% endblock %}
+{% block title %}Teams{% endblock %}
 
 {% block body %}
-    <h1>Team index</h1>
+    <nav class="navbar navbar-expand-lg navbar-light custom-navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Sportsly</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{{ path('app_home_page20') }}" >Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_team_index') }}">Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_matches_index') }}">Matches</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_sponsors_index') }}">Sponsors</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <h1>Teams</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>CreationDate</th>
-                <th>Coach</th>
-                <th>NationalTitle</th>
-                <th>actions</th>
+
+                <th style="text-align: center;">Name</th>
+                <th style="text-align: center;">Creation Date</th>
+                <th style="text-align: center;">Coach</th>
+                <th style="text-align: center;">National Title</th>
+                <th style="text-align: center;">Actions</th>
 
             </tr>
         </thead>
         <tbody>
         {% for team in teams %}
             <tr>
-                <td>{{ team.id }}</td>
-                <td>{{ team.name }}</td>
-                <td>{{ team.creationDate ? team.creationDate|date('Y-m-d') : '' }}</td>
-                <td>{{ team.coach }}</td>
-                <td>{{ team.nationalTitle }}</td>
 
-                <td>
-                    <a href="{{ path('app_team_show', {'id': team.id}) }}">show</a>
-                    <a href="{{ path('app_team_edit', {'id': team.id}) }}">edit</a>
+                <td style="text-align: center;">{{ team.name }}</td>
+                <td style="text-align: center;">{{ team.creationDate ? team.creationDate|date('Y-m-d'): '' }}</td>
+                <td style="text-align: center;">{{ team.coach }}</td>
+                <td style="text-align: center;">{{ team.nationalTitle }}</td>
+
+                <td style="text-align: center;">
+                    <ul style="list-style: none;">
+                        <li><a href="{{ path('app_team_show', {'id': team.id}) }}" class="no_link">see team</a></li>
+                 <li>   <a href="{{ path('app_team_edit', {'id': team.id}) }}" class="no_link">edit</a></li>
+                    </ul>
                 </td>
             </tr>
         {% else %}
@@ -40,5 +67,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_team_new') }}">Create new</a>
+<button class="btn custom-button"> <a href="{{ path('app_team_new') }}"class="custom-link-button">Add new team</a></button>
 {% endblock %}
