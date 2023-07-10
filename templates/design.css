@@ -1,0 +1,38 @@
+
+<style>
+.no_link {
+    color: #555555;
+    background-color: white;
+    border-color: #6c757d;
+}
+.custom-link-button {
+    display: inline-block;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: middle;
+    border-radius: 0.25rem;
+    color: #6c757d;
+    background-color: transparent;
+}
+
+.custom-link-button:hover {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+.custom-navbar {
+    background-color: #402039;
+    color:#178d52;
+    /* Replace with your desired color */
+    /* Additional styling properties */
+}
+.custom_text {
+    color: #178d52;
+    background-color: #402039;
+    border-color: #402039;
+}
+}</style>

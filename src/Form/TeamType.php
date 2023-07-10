@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Sponsors;
 use App\Entity\Team;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,7 +18,8 @@ class TeamType extends AbstractType
             ->add('creationDate')
             ->add('coach')
             ->add('nationalTitle')
-            ->add('teamSponsors')
+           // ->add('teamSponsors')
+
         ;
     }
 

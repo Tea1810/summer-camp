@@ -45,7 +45,6 @@
         <tbody>
         {% for team in teams %}
             <tr>
-
                 <td style="text-align: center;">{{ team.name }}</td>
                 <td style="text-align: center;">{{ team.creationDate ? team.creationDate|date('Y-m-d'): '' }}</td>
                 <td style="text-align: center;">{{ team.coach }}</td>
