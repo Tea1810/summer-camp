@@ -54,10 +54,12 @@ class TeamController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_team_show', methods: ['GET'])]
-    public function show(Team $team): Response
-    {
+    public function show(Team $team,EntityManagerInterface $entityManager): Response
+    {   $teams=$entityManager->getRepository(Team::class)->findAll();
+
         return $this->render('team/show.html.twig', [
             'team' => $team,
+            'tem'=>$teams,
         ]);
     }
 

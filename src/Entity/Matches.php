@@ -22,13 +22,13 @@ class Matches
     #[ORM\JoinColumn(nullable: false)]
     private ?Team $team2 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $score1 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $score2 = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE,nullable: true)]
     private ?\DateTimeInterface $date = null;
 
     public function getId(): ?int

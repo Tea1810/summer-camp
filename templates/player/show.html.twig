@@ -7,10 +7,7 @@
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ player.id }}</td>
-            </tr>
+
             <tr>
                 <th>Name</th>
                 <td>{{ player.name }}</td>
@@ -24,13 +21,13 @@
                 <td>{{ player.nationality }}</td>
             </tr>
             <tr>
-                <th>Role</th>
+                <th>Position</th>
                 <td>{{ player.role }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_player_index') }}">back to list</a>
+    <a href="{{ path('app_team_show', { 'id':player.team.id}) }}">back to list</a>
 
     <a href="{{ path('app_player_edit', {'id': player.id}) }}">edit</a>
 

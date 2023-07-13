@@ -40,6 +40,9 @@ class Team
 
     #[ORM\OneToMany(mappedBy: 'team', targetEntity: Player::class)]
     private Collection $players;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $point = null;
     public function __construct()
     {
         $this->Members = new ArrayCollection();
@@ -219,6 +222,18 @@ class Team
                 $player->setTeam(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPoint(): ?int
+    {
+        return $this->point;
+    }
+
+    public function setPoint(?int $point): static
+    {
+        $this->point = $point;
 
         return $this;
     }

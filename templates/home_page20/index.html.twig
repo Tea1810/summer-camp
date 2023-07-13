@@ -24,12 +24,21 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_sponsors_index') }}">Sponsors</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_team_order') }}">Standings</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-<div class="example-wrapper">
+    <div class="centered-container">
+        <button class="btn custom-button">
+            <a href="{{ path('app_team_new') }}" class="custom-link-button">Add new team</a>
+        </button>
+        <button class="btn custom-button">
+            <a href="{{ path('app_matches_new') }}" class="custom-link-button">Add new game</a>
+        </button>
+    </div>
 
-</div>
 {% endblock %}

@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Matches;
+use App\Entity\Team;
 use App\Form\MatchesType;
 use App\Repository\MatchesRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,10 +21,22 @@ class MatchesController extends AbstractController
     }
     #[Route('/', name: 'app_matches_index', methods: ['GET'])]
     public function index(MatchesRepository $matchesRepository): Response
-    {    $menu = $this->menuPage->createMenu();
+    {
+
+        $menu = $this->menuPage->createMenu();
+        $matches=$matchesRepository->findAll();
+        $cmp = function ($a, $b) {
+            if ($a->getDate() == $b->getDate()) {
+                return 0;
+            }
+            return ($a->getDate() > $b->getDate()) ? -1 : 1;
+        };
+        usort($matches,$cmp);
         return $this->render('matches/index.html.twig', [
-            'matches' => $matchesRepository->findAll(),
+            'match' => $matchesRepository->findAll(),
+            'matches'=>$matches,
             'menu' =>$menu,
+
         ]);
     }
 
@@ -80,4 +94,6 @@ class MatchesController extends AbstractController
 
         return $this->redirectToRoute('app_matches_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
 }

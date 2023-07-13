@@ -51,10 +51,14 @@
                 {% endfor %}
             </ul>{% endif %}</td>
         </tr>
+            <tr>
+                <th>Points</th>
+                <td style="text-align: center;">{{ team.point }}</td>
+            </tr>
         </tbody>
     </table>
 
-<button class="btn custom-button"><a href="{{ path('app_team_index') }}" class="custom-link-button">Back to list</a></button>
+       <button class="btn custom-button"><a href="{{ path('app_team_index') }}" class="custom-link-button">Back to list</a></button>
        <button class="btn custom-button"><a href="{{ path('app_team_edit', {'id': team.id}) }}"class="custom-link-button">Edit</a></button>
 
 

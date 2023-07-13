@@ -24,6 +24,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_sponsors_index') }}">Sponsors</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_team_order') }}">Standings</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -31,21 +34,23 @@
     <h1>Matches</h1>
 
     <table class="table">
+
+        {% for match in matches %}
         <thead>
             <tr>
 
-                <th style="text-align: center;">Home Team score</th>
-                <th style="text-align: center;">Away Team score</th>
+                <th style="text-align: center;">{{ match.team1 }}</th>
+                <th style="text-align: center;"> {{ match.team2 }}</th>
                 <th style="text-align: center;">Date of the game</th>
                 <th style="text-align: center;">Winner of the match</th>
                 <th style="text-align: center;">Actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for match in matches %}
+
                 <td style="text-align: center;">{{ match.score1 }}</td>
                 <td style="text-align: center;">{{ match.score2 }}</td>
-                <td style="text-align: center;">{{ match.date ? match.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td style="text-align: center;"><ul style="list-style: none"><li>{{ match.date ? match.date|date('d M') : '' }}</li><li>{{ match.date ? match.date|date('H:i') : '' }}</li></ul></td>
                 {% if match.score1>match.score2 %}
                     <td style="text-align: center;">{{ match.team1 }}</td>
                 {% elseif match.score1<match.score2%}
@@ -64,10 +69,10 @@
             <tr>
                 <td colspan="5">no records found</td>
             </tr>
-        {% endfor %}
+
         </tbody>
     </table>
-
+{% endfor %}
     <button class="btn custom-button"> <a href="{{ path('app_matches_new') }}" class="custom-link-button">Add new match</a></button>
 
 {% endblock %}

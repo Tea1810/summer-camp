@@ -8,6 +8,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 
 class TeamType extends AbstractType
 {
@@ -15,12 +17,24 @@ class TeamType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('creationDate')
+            ->add('creationDate', ChoiceType::class, [
+                'choices' => $this->getYearsRange(),
+            ])
             ->add('coach')
             ->add('nationalTitle')
+            ->add('point')
+            ->add('HomeGames')
+            ->add('AwayGames')
            // ->add('teamSponsors')
 
         ;
+    }
+    private function getYearsRange()
+    {
+        $currentYear = (int) date('Y');
+        $yearsRange = range(1900, $currentYear);
+
+        return array_combine($yearsRange, $yearsRange);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
