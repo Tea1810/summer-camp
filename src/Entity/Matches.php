@@ -27,10 +27,14 @@ class Matches
 
     #[ORM\Column(nullable: true)]
     private ?int $score2 = null;
-
+    #[Assert\LessThanOrEqual('today')]
     #[ORM\Column(type: Types::DATETIME_MUTABLE,nullable: true)]
     private ?\DateTimeInterface $date = null;
 
+    public function __toString()
+    {
+        return $this->getTeam1()->getName();
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -95,4 +99,5 @@ class Matches
 
         return $this;
     }
+
 }

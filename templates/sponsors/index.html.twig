@@ -16,7 +16,7 @@
                         <a class="nav-link" aria-current="page" href="{{ path('app_home_page20') }}" >Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_team_index') }}">Team</a>
+                        <a class="nav-link" href="{{ path('app_team_index') }}">Teams</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_matches_index') }}">Matches</a>
@@ -62,13 +62,12 @@
                 <td style="text-align: center;">
                     <ul style="list-style: none;">
                    <li> <a href="{{ path('app_sponsors_show', {'id': sponsor.id}) }}" class="no_link">see sponsor</a> </li>
-                   <li> <a href="{{ path('app_sponsors_edit', {'id': sponsor.id}) }}" class="no_link">edit</a></ul></li>
-
+                   <li> <a href="{{ path('app_sponsors_edit', {'id': sponsor.id}) }}" class="no_link">edit</a>  </li></ul>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">No records found</td>
             </tr>
         {% endfor %}
 

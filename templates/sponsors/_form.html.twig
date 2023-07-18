@@ -1,4 +1,51 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'class': 'row g-3 needs-validation'}}) }}
+<div class="col-md-5" style="margin-left: 5px">
+    {{ form_label(form.name) }}
+
+    {{ form_widget(form.name, {'attr': {'class': 'form-control' ~ (form_errors(form.name)|length > 0 ? ' is-invalid' : (form.name.vars.valid and form.name.vars.data is not empty? ' is-valid' : '')), 'required': 'required'}}) }}
+    {% if form.name.vars.errors|length > 0 %}
+        <div class="invalid-feedback">
+            {{ form_errors(form.name) }}
+        </div>
+    {% else %}
+        <div class="valid-feedback">
+            Looks good!
+        </div>
+    {% endif %}
+</div>
+<div class="col-md-5" >
+    {{ form_label(form.commercialZone) }}
+    {{ form_widget(form.commercialZone, {'attr': {'class': 'form-control' ~ (form_errors(form.commercialZone)|length > 0 ? ' is-invalid' : (form.commercialZone.vars.valid and form.commercialZone.vars.data is not empty? ' is-valid' : '')), 'required': 'required'}}) }}
+    {% if form.commercialZone.vars.errors|length > 0 %}
+        <div class="invalid-feedback">
+            {{ form_errors(form.commercialZone) }}
+        </div>
+    {% else %}
+        <div class="valid-feedback">
+            Looks good!
+        </div>
+    {% endif %}
+</div>
+<div class="col-md-5" style="margin-top: 20px;margin-left: 5px">
+    {{ form_label(form.teams) }}
+
+    {{ form_widget(form.teams, {'attr': {'class': 'form-control custom-select' ~ (form_errors(form.teams)|length > 0 ? ' is-invalid' : (form.teams.vars.valid and form.teams.vars.data is not empty? ' is-valid' : ''))}}) }}
+
+    {% if form.teams.vars.errors|length > 0 %}
+        <div class="invalid-feedback">
+            {{ form_errors(form.teams) }}
+        </div>
+    {% else %}
+
+        <div class="valid-feedback">
+            Looks good!</div>
+    {% endif %}
+    Keep Ctrl pressed to select more teams
+</div>
+<div class="col-md-4 mt-5 ml-4"  >
+    <button class="btn custom-button" type="submit" >
+        <div class="custom-link-button">
+            {{ button_label|default('Save') }}</div> </button>
+    <button class="btn custom-button"><a href="{{ path('app_sponsors_index') }}" class="custom-link-button">Back to Sponsor's list</a></button>
+</div>
 {{ form_end(form) }}

@@ -1,4 +1,27 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'class': 'row g-3 needs-validation'}}) }}
+<div class="col-md-5" style="margin-left: 10px">
+    {{ form_label(form.score1) }}
+    {{ form_widget(form.score1, {'attr': {'class': 'form-control', 'required': 'required'}}) }}
+</div>
+<div class="col-md-5" style="margin-left: 10px">
+    {{ form_label(form.score2) }}
+    {{ form_widget(form.score2, {'attr': {'class': 'form-control', 'required': 'required'}}) }}
+</div>
+
+<div class="col-md-5" style="margin-left: 10px;margin-top: 30px">
+    {{ form_label(form.team1) }}
+    {{ form_widget(form.team1, {'attr': {'class': 'form-control', 'required': 'required'}}) }}
+</div>
+<div class="col-md-5" style="margin-left: 10px;margin-top: 30px">
+    {{ form_label(form.team2) }}
+    {{ form_widget(form.team2, {'attr': {'class': 'form-control', 'required': 'required'}}) }}
+</div>
+<div class="col-md-4 mt-4" style="margin-left: 10px">
+    <button class="btn custom-button" type="submit">
+        <div class="custom-link-button">{{ button_label|default('Save') }}</div>
+    </button>
+    <button class="btn custom-button">
+        <a href="{{ path('app_matches_index') }}" class="custom-link-button">Back to matches</a>
+    </button>
+</div>
 {{ form_end(form) }}

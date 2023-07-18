@@ -1,4 +1,76 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'class': 'row g-3 needs-validation'}}) }}
+<div class="col-md-4">
+    {{ form_label(form.name) }}
+
+    {{ form_widget(form.name, {'attr': {'class': 'form-control' ~ (form_errors(form.name)|length > 0 ? ' is-invalid' : (form.name.vars.valid and form.name.vars.data is not empty? ' is-valid' : '')), 'required': 'required'}}) }}
+    {% if form.name.vars.errors|length > 0 %}
+        <div class="invalid-feedback">
+            {{ form_errors(form.name) }}
+        </div>
+    {% else %}
+        <div class="valid-feedback">
+            Looks good!
+        </div>
+    {% endif %}
+</div>
+<div class="col-md-4">
+    {{ form_label(form.age, null, {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.age, {'attr': {'class': 'form-control' ~ (form_errors(form.age)|length > 0 ? ' is-invalid' : (form.age.vars.valid and form.age.vars.data is not empty? ' is-valid' : '')), 'required': 'required'}}) }}
+    {% if form.age.vars.errors|length %}
+        <div class="invalid-feedback">
+            {{ form_errors(form.age) }}
+        </div>
+    {% else %}
+        <div class="valid-feedback">
+            Looks good!
+        </div>
+    {% endif %}
+</div>
+<div class="col-md-4">
+    {{ form_label(form.role) }}
+    {{ form_widget(form.role, {'attr': {'class': 'form-control' ~ (form_errors(form.role)|length > 0 ? ' is-invalid' : (form.role.vars.valid and form.role.vars.data is not empty? ' is-valid' : '')), 'required': 'required'}}) }}
+    {% if form.role.vars.errors|length > 0 %}
+        <div class="invalid-feedback">
+            {{ form_errors(form.role) }}
+        </div>
+    {% else %}
+        <div class="valid-feedback">
+            Looks good!
+        </div>
+    {% endif %}
+</div>
+<div class="col-md-4">
+    {{ form_label(form.team) }}
+
+    {{ form_widget(form.team, {'attr': {'class': 'form-control' ~ (form_errors(form.team)|length > 0 ? ' is-invalid' : (form.team.vars.valid and form.team.vars.data is not empty? ' is-valid' : '')), 'required': 'required'}}) }}
+    {% if form.team.vars.errors|length > 0 %}
+        <div class="invalid-feedback">
+            {{ form_errors(form.team) }}
+        </div>
+    {% else %}
+
+        <div class="valid-feedback">
+            Looks good!</div>
+    {% endif %}
+</div>
+<div class="col-md-4">
+    {{ form_label(form.nationality) }}
+    {{ form_widget(form.nationality, {'attr': {'class': 'form-control' ~ (form_errors(form.nationality)|length > 0 ? ' is-invalid' : (form.nationality.vars.valid and form.nationality.vars.data is not empty? ' is-valid' : '')), 'required': 'required'}}) }}
+    {% if form.nationality.vars.errors|length > 0 %}
+        <div class="invalid-feedback">
+            {{ form_errors(form.nationality) }}
+        </div>
+    {% elseif form.nationality.vars.errors|length == 0%}
+        <div class="valid-feedback">
+            Looks good!
+        </div>
+    {% endif %}
+</div>
+
+<div class="col-md-4  text-center mt-4" >
+    <button class="btn custom-button" type="submit" >
+        <div class="custom-link-button">
+        {{ button_label|default('Save') }} </div></button>
+    <button class="btn custom-button"><a href="{{ path('app_team_index') }}" class="custom-link-button">Back to teams</a></button>
+</div>
 {{ form_end(form) }}

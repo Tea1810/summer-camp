@@ -19,7 +19,7 @@ class SponsorsType extends AbstractType
            // ->add('teams')
             ->add('teams',EntityType::class,array(
                 'class'=>Team::class,
-                'expanded' =>true,
+                'expanded' =>false,
                 'multiple' =>true,
             ))
         ;

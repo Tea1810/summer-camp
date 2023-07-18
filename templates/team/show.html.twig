@@ -6,22 +6,34 @@
     <h1>{{ team.name }}</h1>
 
     <table class="table">
+        <thead>
+        <th style="text-align: center;">Creation Date</th>
+        <th style="text-align: center;">Coach</th>
+        <th style="text-align: center;">National Title</th>
+        <th style="text-align: center;">Players</th>
+        <th style="text-align: center;">Sponsors</th>
+
+        </thead>
         <tbody>
-            <tr>
-                <th>Creation Date</th>
-                <td style="text-align: center;">{{ team.creationDate ? team.creationDate|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Coach</th>
-                <td style="text-align: center;">{{ team.coach }}</td>
-            </tr>
-            <tr>
-                <th>National Title</th>
-                <td style="text-align: center;">{{ team.nationalTitle }}</td>
-            </tr>
-             <tr>
-                 <th>Sponsors</th>
-                 <td style="text-align: center;">
+            <td style="text-align: center;">{{ team.creationDate ? team.creationDate|date('Y-m-d') : '' }}</td>
+             <td style="text-align: center;">{{ team.coach }}</td>
+             <td style="text-align: center;">{{ team.nationalTitle }}</td>
+            <td style="text-align: center;">
+                {% if team.players|length == 0 %}
+                <ul style="list-style: none;">
+                    <li>No Players</li>
+                </ul>
+                {% else %}
+                <ul style="list-style: none;">
+                    {% for players in team.players %}
+                        <li>
+                            <a href="{{ path('app_player_show', {'id': players.id}) }}" class="no_link">{{ players }}</a>
+                        </li>
+                    {% endfor %}
+                    {% endif %}
+
+                </ul></td>
+             <td style="text-align: center;">
                      {% if team.teamSponsors|length == 0 %}
                          <ul style="list-style: none;">
                              <li>No Sponsors</li>
@@ -34,32 +46,28 @@
                              {% endfor %}
                          </ul>
                      {% endif %}</td>
-             </tr>
-        <tr>
-            <th>Players</th>
-            <td style="text-align: center;">
-                {% if team.teamSponsors|length == 0 %}
-                <ul style="list-style: none;">
-                    <li>No Sponsors</li>
-                </ul>
-                {% else %}
-            <ul style="list-style: none;">
-                {% for players in team.players %}
-                    <li>
-            <a href="{{ path('app_player_show', {'id': players.id}) }}" >{{ players }}</a>
-                    </li>
-                {% endfor %}
-            </ul>{% endif %}</td>
-        </tr>
-            <tr>
-                <th>Points</th>
-                <td style="text-align: center;">{{ team.point }}</td>
-            </tr>
         </tbody>
     </table>
+    <table class="table">
+        <thead>
+            <th style="text-align: center;">Total Points</th>
+            <th style="text-align: center;">Total Goals</th>
+            <th style="text-align: center;">Wins</th>
+            <th style="text-align: center;">Losses</th>
 
+        </thead>
+        <tbody>
+        <td style="text-align: center;">{{ team.point }}</td>
+        <td style="text-align: center;">{{ team.goals }}</td>
+        <td style="text-align: center;">{{ team.wins }}</td>
+        <td style="text-align: center;">{{ team.losses }}</td>
+
+
+        </tbody>
+    </table>
+      <button class="btn custom-button"><a href="{{ path('app_player_new') }}" class="custom-link-button">Add new player</a></button>
        <button class="btn custom-button"><a href="{{ path('app_team_index') }}" class="custom-link-button">Back to list</a></button>
-       <button class="btn custom-button"><a href="{{ path('app_team_edit', {'id': team.id}) }}"class="custom-link-button">Edit</a></button>
+       <button class="btn custom-button"> <a href="{{ path('app_team_edit', {'id': team.id}) }}" class="custom-link-button">Edit Team</a></button>
 
 
 {{ include('team/_delete_form.html.twig') }}

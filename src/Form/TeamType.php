@@ -2,13 +2,13 @@
 
 namespace App\Form;
 
-use App\Entity\Sponsors;
+
 use App\Entity\Team;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 
 class TeamType extends AbstractType
@@ -17,25 +17,23 @@ class TeamType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('creationDate', ChoiceType::class, [
-                'choices' => $this->getYearsRange(),
+            ->add('creationDate', DateType::class, [
+                'years' => range(1900, date('Y')),
             ])
             ->add('coach')
             ->add('nationalTitle')
-            ->add('point')
-            ->add('HomeGames')
+
+            /* ->add('point')
+           ->add('HomeGames')
             ->add('AwayGames')
+            ->add('Wins')
+            ->add('Losses')
+            ->add('Goals')*/
            // ->add('teamSponsors')
 
         ;
     }
-    private function getYearsRange()
-    {
-        $currentYear = (int) date('Y');
-        $yearsRange = range(1900, $currentYear);
 
-        return array_combine($yearsRange, $yearsRange);
-    }
 
     public function configureOptions(OptionsResolver $resolver): void
     {

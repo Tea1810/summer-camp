@@ -35,7 +35,7 @@
 <table class="table">
     <thead>
     <tr>
-
+        <th style="text-align: center;">Place</th>
         <th style="text-align: center;">Team</th>
         <th style="text-align: center;">Points</th>
 
@@ -43,8 +43,9 @@
     <tbody>
 
        {% for team in teams %}
-    <tr><td style="text-align: center;">{{ team.name }}</td> <td style="text-align: center;">{{ team.point }}</td></tr>
-    {% endfor %}
+    <tr><td style="text-align: center;">{{ var }}</td><td style="text-align: center;">{{ team.name }}</td> <td style="text-align: center;">{{ team.point }}</td></tr>
+      {% set var=var+1 %}
+       {% endfor %}
     </tbody></table>
 
 {% endblock %}

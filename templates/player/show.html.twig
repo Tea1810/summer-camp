@@ -3,33 +3,28 @@
 {% block title %}Player{% endblock %}
 
 {% block body %}
-    <h1>Player</h1>
+    <h1 style="text-align: center">{{ player.name}}</h1>
 
     <table class="table">
         <tbody>
-
             <tr>
-                <th>Name</th>
-                <td>{{ player.name }}</td>
+                <th style="text-align: center">Age</th>
+                <td style="text-align: center">{{ player.age }}</td>
             </tr>
             <tr>
-                <th>Age</th>
-                <td>{{ player.age }}</td>
+                <th style="text-align: center">Nationality</th>
+                <td style="text-align: center">{{ player.nationality }}</td>
             </tr>
             <tr>
-                <th>Nationality</th>
-                <td>{{ player.nationality }}</td>
-            </tr>
-            <tr>
-                <th>Position</th>
-                <td>{{ player.role }}</td>
+                <th style="text-align: center">Position</th>
+                <td style="text-align: center">{{ player.role }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_team_show', { 'id':player.team.id}) }}">back to list</a>
+<button class="btn custom-button" style="text-align: center"> <a href="{{ path('app_team_show', { 'id':player.team.id}) }}" class="custom-link-button">Back to list</a></button>
 
-    <a href="{{ path('app_player_edit', {'id': player.id}) }}">edit</a>
+    <button class="btn custom-button"> <a href="{{ path('app_player_edit', {'id': player.id}) }}" class="custom-link-button">Edit</a></button>
 
     {{ include('player/_delete_form.html.twig') }}
 {% endblock %}

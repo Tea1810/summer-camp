@@ -3,9 +3,11 @@
 {% block title %}New Player{% endblock %}
 
 {% block body %}
-    <h1>Create new Player</h1>
-
+    <h1 class="mt-5" style="text-align: center;margin-bottom: 70px">Add new Player</h1>
+<div>
     {{ include('player/_form.html.twig') }}
 
-    <a href="{{ path('app_player_index') }}">back to list</a>
+</div>
+
+
 {% endblock %}

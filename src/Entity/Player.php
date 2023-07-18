@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PlayerRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: PlayerRepository::class)]
 class Player
 {
@@ -17,9 +17,14 @@ class Player
     #[ORM\JoinColumn(nullable: false)]
     private ?Team $team = null;
 
+    #[Assert\Choice(
+        choices: ['Midfielder', 'Defender','Forward','Goalkeeper','goalkeeper','forward','defender','midfielder'],
+        message: 'Choose a valid genre.',
+    )]
     #[ORM\Column(length: 255)]
     private ?string $role = null;
-
+    #[Assert\LessThanOrEqual(50)]
+    #[Assert\GreaterThan(10)]
     #[ORM\Column(length: 255)]
     private ?string $age = null;
 

@@ -7,8 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ORM\Entity(repositoryClass: TeamRepository::class)]
+#[UniqueEntity(fields: ['name'], message: 'This team is already in the game')]
 class Team
 {
     #[ORM\Id]
@@ -16,12 +19,23 @@ class Team
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\Length(
+        min: 2,
+        max: 30,
+        minMessage: 'Your name must be at least {{ limit }} characters long',
+        maxMessage: 'Your name cannot be longer than {{ limit }} characters',
+    )]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
-
+    #[Assert\LessThanOrEqual('today')]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $creationDate = null;
-
+    #[Assert\Length(
+        min: 2,
+        max: 30,
+        minMessage: 'Your name of the coach must be at least {{ limit }} characters long',
+        maxMessage: 'Your name of the coach cannot be longer than {{ limit }} characters',
+    )]
     #[ORM\Column(length: 255)]
     private ?string $coach = null;
 
@@ -43,6 +57,17 @@ class Team
 
     #[ORM\Column(nullable: true)]
     private ?int $point = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $Wins = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $Losses = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $Goals = null;
+
+
     public function __construct()
     {
         $this->Members = new ArrayCollection();
@@ -234,6 +259,42 @@ class Team
     public function setPoint(?int $point): static
     {
         $this->point = $point;
+
+        return $this;
+    }
+
+    public function getWins(): ?int
+    {
+        return $this->Wins;
+    }
+
+    public function setWins(?int $Wins): static
+    {
+        $this->Wins = $Wins;
+
+        return $this;
+    }
+
+    public function getLosses(): ?int
+    {
+        return $this->Losses;
+    }
+
+    public function setLosses(?int $Losses): static
+    {
+        $this->Losses = $Losses;
+
+        return $this;
+    }
+
+    public function getGoals(): ?int
+    {
+        return $this->Goals;
+    }
+
+    public function setGoals(?int $Goals): static
+    {
+        $this->Goals = $Goals;
 
         return $this;
     }

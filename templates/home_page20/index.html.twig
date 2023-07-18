@@ -16,7 +16,7 @@
                         <a class="nav-link" aria-current="page" href="{{ path('app_home_page20') }}" >Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_team_index') }}">Team</a>
+                        <a class="nav-link" href="{{ path('app_team_index') }}">Teams</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_matches_index') }}">Matches</a>
@@ -31,14 +31,11 @@
             </div>
         </div>
     </nav>
-
-    <div class="centered-container">
-        <button class="btn custom-button">
-            <a href="{{ path('app_team_new') }}" class="custom-link-button">Add new team</a>
-        </button>
-        <button class="btn custom-button">
-            <a href="{{ path('app_matches_new') }}" class="custom-link-button">Add new game</a>
-        </button>
-    </div>
+    <div style="background-image: url({{ asset('Sportslyy.png') }}); background-size: cover; background-position: center; min-height: 90vh; display: flex; align-items: center; justify-content: center;">
+            <div class="centered-container" style="margin-top: 150px">
+                <button class="btn custom-button-home-page" style="margin-top: 120px">
+                    <a href="{{ path('app_team_new') }}" class="custom-link-button-home">Add teams</a>
+                </button>
+            </div></div>
 
 {% endblock %}

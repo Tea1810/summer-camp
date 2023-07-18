@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Sponsors;
+use App\Entity\Team;
 use App\Form\SponsorsType;
 use App\Repository\SponsorsRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Faker\Factory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,15 +15,36 @@ use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/sponsors')]
 class SponsorsController extends AbstractController
-{
-    public function __construct(HomeMenu $menuPage)
+{  private EntityManagerInterface $entityManager;
+    public function __construct(HomeMenu $menuPage,EntityManagerInterface $entityManager)
     {
         $this->menuPage = $menuPage;
+        $this->entityManager = $entityManager;
+    }
+    public function falseTeam(EntityManagerInterface $entityManager)
+    {
+        $faker=Factory::create();
+        for($i=1;$i<=10;$i++)
+        {
+            $sponsor=new Sponsors();
+            $sponsor->setName($faker->company);
+            $sponsor->setCommercialZone($faker->word);
+            $entityManager->persist($team);
+        }
+        $entityManager->flush();
+    }
+    public function deleteAllSponsors(): void
+    {
+        $connection = $this->entityManager->getConnection();
+        $platform = $connection->getDatabasePlatform();
+        $connection->executeStatement('DELETE FROM sponsors');
+        $connection->executeStatement($platform->getTruncateTableSQL('sponsors', true));
     }
 
     #[Route('/', name: 'app_sponsors_index', methods: ['GET'])]
     public function index(SponsorsRepository $sponsorsRepository): Response
     {   $menu = $this->menuPage->createMenu();
+        //$this->deleteAllSponsors();
         return $this->render('sponsors/index.html.twig', [
             'sponsors' => $sponsorsRepository->findAll(),
             'menu' => $menu,

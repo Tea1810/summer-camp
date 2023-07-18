@@ -3,16 +3,23 @@
 namespace App\Controller;
 
 use App\Entity\Player;
+use App\Entity\Team;
 use App\Form\PlayerType;
 use App\Repository\PlayerRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Faker\Factory;
 
 #[Route('/player')]
 class PlayerController extends AbstractController
 {
+
+
+
     #[Route('/', name: 'app_player_index', methods: ['GET'])]
     public function index(PlayerRepository $playerRepository): Response
     {
@@ -31,12 +38,17 @@ class PlayerController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $playerRepository->save($player, true);
 
-            return $this->redirectToRoute('app_player_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_team_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $formErrors = [];
+        foreach ($form->getErrors(true) as $error) {
+            $formErrors[] = $error->getMessage();
+        }
         return $this->renderForm('player/new.html.twig', [
             'player' => $player,
-            'form' => $form,
+            'form' => $form->createView(),
+            'formErrors' => $formErrors,
         ]);
     }
 
@@ -73,6 +85,6 @@ class PlayerController extends AbstractController
             $playerRepository->remove($player, true);
         }
 
-        return $this->redirectToRoute('app_player_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_team_index', [], Response::HTTP_SEE_OTHER);
     }
 }
