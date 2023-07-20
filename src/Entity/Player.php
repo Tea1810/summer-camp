@@ -19,7 +19,7 @@ class Player
 
     #[Assert\Choice(
         choices: ['Midfielder', 'Defender','Forward','Goalkeeper','goalkeeper','forward','defender','midfielder'],
-        message: 'Choose a valid genre.',
+        message: 'Choose a valid genre:Midfielder,Defender,Forward,Goalkeeper.',
     )]
     #[ORM\Column(length: 255)]
     private ?string $role = null;

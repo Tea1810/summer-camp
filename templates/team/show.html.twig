@@ -3,7 +3,7 @@
 {% block title %}Team{% endblock %}
 
 {% block body %}
-    <h1>{{ team.name }}</h1>
+    <h1 style="text-align: center;margin-top: 30px;margin-bottom: 20px">{{ team.name }}</h1>
 
     <table class="table">
         <thead>
@@ -24,15 +24,26 @@
                     <li>No Players</li>
                 </ul>
                 {% else %}
-                <ul style="list-style: none;">
+                <table style="width: 100%">
+                    {% set avr=0 %}
                     {% for players in team.players %}
-                        <li>
+                        {% if avr is divisible by (2) %}
+                        <tr>
+                        <td>
                             <a href="{{ path('app_player_show', {'id': players.id}) }}" class="no_link">{{ players }}</a>
-                        </li>
+                        </td>
+                        {% set avr=avr+1 %}
+
+                        {% else %}
+                            <td>
+                                <a href="{{ path('app_player_show', {'id': players.id}) }}" class="no_link">{{ players }}</a>
+                            </td>
+                            {% set avr=avr+1 %}</tr>
+                        {% endif %}
                     {% endfor %}
                     {% endif %}
 
-                </ul></td>
+                </table></td>
              <td style="text-align: center;">
                      {% if team.teamSponsors|length == 0 %}
                          <ul style="list-style: none;">

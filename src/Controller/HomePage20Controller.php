@@ -18,4 +18,5 @@ class HomePage20Controller extends AbstractController
             'menu' => $menu,
         ]);
     }
+
 }

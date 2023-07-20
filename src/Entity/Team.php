@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\TeamRepository;
+use App\Entity\Sponsors;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -43,16 +44,15 @@ class Team
     private ?string $nationalTitle = null;
 
 
-    #[ORM\OneToMany(mappedBy: 'team1', targetEntity: Matches::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'team1', targetEntity: Matches::class, orphanRemoval: true,cascade: ['persist', 'remove'])]
     private Collection $HomeGames;
 
-    #[ORM\OneToMany(mappedBy: 'team2', targetEntity: Matches::class)]
+    #[ORM\OneToMany(mappedBy: 'team2', targetEntity: Matches::class,cascade: ['persist', 'remove'])]
     private Collection $AwayGames;
 
     #[ORM\ManyToMany(targetEntity: Sponsors::class, mappedBy: 'teams')]
     private Collection $teamSponsors;
-
-    #[ORM\OneToMany(mappedBy: 'team', targetEntity: Player::class)]
+    #[ORM\OneToMany(mappedBy: 'team', targetEntity: Player::class, cascade: ['persist', 'remove'])]
     private Collection $players;
 
     #[ORM\Column(nullable: true)]

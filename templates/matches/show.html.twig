@@ -3,9 +3,9 @@
 {% block title %}Matches{% endblock %}
 
 {% block body %}
-    <h1>Matches</h1>
+    <h1 style="text-align: center;margin-bottom: 10px;margin-top: 10px">Matches</h1>
 
-    <table class="table">
+    <table class="table  table-striped">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -26,9 +26,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_matches_index') }}">back to list</a>
+<button class="btn custom-button"> <a href="{{ path('app_matches_index') }}" class="custom-link-button">Back to list</a></button>
 
-    <a href="{{ path('app_matches_edit', {'id': match.id}) }}">edit</a>
+    <button class="btn custom-button"><a href="{{ path('app_matches_edit', {'id': match.id}) }}" class="custom-link-button">Edit</a></button>
 
     {{ include('matches/_delete_form.html.twig') }}
 {% endblock %}

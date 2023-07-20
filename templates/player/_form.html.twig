@@ -2,7 +2,8 @@
 <div class="col-md-4">
     {{ form_label(form.name) }}
 
-    {{ form_widget(form.name, {'attr': {'class': 'form-control' ~ (form_errors(form.name)|length > 0 ? ' is-invalid' : (form.name.vars.valid and form.name.vars.data is not empty? ' is-valid' : '')), 'required': 'required'}}) }}
+    {{ form_widget(form.name, {'attr': {'class': 'form-control' ~ (form_errors(form.name)|length > 0 ? ' is-invalid' :
+    (form.name.vars.valid and form.name.vars.data is not empty? ' is-valid' : '')), 'required': 'required'}}) }}
     {% if form.name.vars.errors|length > 0 %}
         <div class="invalid-feedback">
             {{ form_errors(form.name) }}
@@ -15,7 +16,8 @@
 </div>
 <div class="col-md-4">
     {{ form_label(form.age, null, {'label_attr': {'class': 'form-label'}}) }}
-    {{ form_widget(form.age, {'attr': {'class': 'form-control' ~ (form_errors(form.age)|length > 0 ? ' is-invalid' : (form.age.vars.valid and form.age.vars.data is not empty? ' is-valid' : '')), 'required': 'required'}}) }}
+    {{ form_widget(form.age, {'attr': {'class': 'form-control' ~ (form_errors(form.age)|length > 0 ? ' is-invalid'
+    : (form.age.vars.valid and form.age.vars.data is not empty? ' is-valid' : '')), 'required': 'required'}}) }}
     {% if form.age.vars.errors|length %}
         <div class="invalid-feedback">
             {{ form_errors(form.age) }}

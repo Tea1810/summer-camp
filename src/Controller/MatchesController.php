@@ -6,6 +6,7 @@ use App\Entity\Matches;
 use App\Entity\Team;
 use App\Form\MatchesType;
 use App\Repository\MatchesRepository;
+use App\Repository\TeamRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,106 +21,39 @@ use DateTime;
 #[Route('/matches')]
 class MatchesController extends AbstractController
 {
-    private EntityManagerInterface $entityManager;
+
     public function __construct(HomeMenu $menuPage, EntityManagerInterface $entityManager)
     {
         $this->menuPage = $menuPage;
         $this->entityManager = $entityManager;
 
     }
-    public function deleteAllMatches(): void
-    {
-        $connection = $this->entityManager->getConnection();
-        $platform = $connection->getDatabasePlatform();
-        $connection->executeStatement('DELETE FROM matches');
-        $connection->executeStatement($platform->getTruncateTableSQL('matches', true));
-    }
+//    public function deleteAllMatches(): void
+//    {
+//        $connection = $this->entityManager->getConnection();
+//        $platform = $connection->getDatabasePlatform();
+//        $connection->executeStatement('DELETE FROM matches');
+//        $connection->executeStatement($platform->getTruncateTableSQL('matches', true));
+//    }
     private function dateModifier(DateTimeInterface $dateTime): DateTimeInterface
     {
-        $dayStart = 9; // 9 AM
-        $dayEnd = 23; // Midnight (24:00)
 
-        $dateTime=$dateTime->modify('+2 hours');
+        $dateTime=$dateTime->modify('+3 hours');
 
-        if ($dateTime->format('H') >= $dayEnd) {
+        if ($dateTime->format('H') >= 21) {
             $dateTime=$dateTime->modify('+1 day');
-            $dateTime=$dateTime->setTime($dayStart, 0, 0);
+            $dateTime=$dateTime->setTime(9, 0, 0);
         }
 
         return $dateTime;
     }
 
-    #[Route('/', name: 'app_matches_index', methods: ['GET'])]
+    #[Route('/', name: 'app_matches_index', methods: ['GET','POST'])]
     public function index(MatchesRepository $matchesRepository,EntityManagerInterface $entityManager): Response
     {
-
         $menu = $this->menuPage->createMenu();
         $matches=$matchesRepository->findAll();
         $teams=$entityManager->getRepository(Team::class)->findAll();
-        $existingMatches = $matchesRepository->findAll();
-        $nr=$entityManager->getRepository(Matches::class)->count([]);
-
-        //Verific daca am mai generat deja echipele cand dau refresh
-        $existingTeams = [];
-        foreach ($existingMatches as $existingMatch) {
-            $existingTeams[$existingMatch->getTeam1()->getId()][$existingMatch->getTeam2()->getId()] = true;
-            $existingTeams[$existingMatch->getTeam2()->getId()][$existingMatch->getTeam1()->getId()] = true;
-        }
-        //Generez toate meciurile si le salvez in baza de date
-        foreach ($teams as $team1)
-            foreach ($teams as $team2)
-                if($team1->getName()!=$team2->getName() && !isset($existingTeams[$team1->getId()][$team2->getId()]))
-                {
-                    $match=new Matches();
-                    $match->setTeam1($team1);
-                    $match->setTeam2($team2);
-                   // $match->setDate(01.01.2001);
-                    $match->setScore1(-1);
-                    $match->setScore2(-1);
-                    $entityManager->persist($match);
-
-                }
-        $entityManager->flush();
-
-        //Le dau cate o data random
-        $rndm=rand(0,$nr-1);
-        if(!empty($matches) &&$matches[0]->getDate()==null){
-            if($rndm>$nr/2)
-                $m=(2*$rndm-$nr)/2;
-            elseif($rndm<$nr/2)
-                $m=($nr-2*$rndm)/2;
-
-            $today=new \DateTime();
-            $today->setTime(7, 0, 0);
-            $this->dateModifier($today);
-            for($i=0;$i<$rndm;$i++)
-                if ($rndm+$i<$nr){
-                    $matches[$i]->setDate(clone $today);
-                    $this->dateModifier($today);
-                    $matches[$rndm+$i]->setDate(clone $today);
-                    $this->dateModifier($today);
-                }
-            if ($rndm<$nr/2){
-                for($i=0;$i<$m;$i++)
-                {
-                    $matches[2*$rndm+$i]->setDate( clone $today);
-                    $this->dateModifier($today);
-                    $matches[2*$rndm+$m+$i]->setDate(clone $today);
-                    $this->dateModifier($today);
-
-                }}
-            elseif ($rndm>$nr/2)
-                for ($i=0;$i<$m;$i++)
-                {
-                    $matches[$nr-$rndm+$i]->setDate(clone $today);
-                    $this->dateModifier($today);
-                    $matches[$nr-$rndm+$m+$i]->setDate(clone $today);
-                    $this->dateModifier($today);
-
-                }
-
-            $entityManager->flush();
-        }
         //Le sortez dupa data
         $cmp = function ($a, $b) {
             if ($a->getDate() == $b->getDate()) {
@@ -134,6 +68,7 @@ class MatchesController extends AbstractController
             'matches'=>$matches,
             'menu' =>$menu,
             'teams'=>$teams,
+
 
         ]);
 
@@ -167,14 +102,44 @@ class MatchesController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_matches_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Matches $match, MatchesRepository $matchesRepository): Response
+    public function edit(Request $request, Matches $match, MatchesRepository $matchesRepository,
+                         EntityManagerInterface $entityManager, TeamRepository $teamRepository): Response
     {
         $form = $this->createForm(MatchesType::class, $match);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $matchesRepository->save($match, true);
-
+            if($match->getScore1()>$match->getScore2())
+            {
+                $team1=$match->getTeam1();
+                $team2=$match->getTeam2();
+                $team1->setPoint($team1->getPoint()+3);
+                $team1->setWins($team1->getWins()+1);
+                $team2->setLosses(($team2)->getLosses()+1);
+                $team1->setGoals($team1->getGoals()+$match->getScore1());
+                $team2->setGoals($team2->getGoals()+$match->getScore2());
+            }
+            elseif($match->getScore1()<$match->getScore2())
+            {
+                $team1=$match->getTeam1();
+                $team2=$match->getTeam2();
+                $team2->setPoint($team2->getPoint()+3);
+                $team2->setWins($team2->getWins()+1);
+                $team1->setLosses(($team1)->getLosses()+1);
+                $team1->setGoals($team1->getGoals()+$match->getScore1());
+                $team2->setGoals($team2->getGoals()+$match->getScore2());
+            }
+            else {
+                $team1=$match->getTeam1();
+                $team2=$match->getTeam2();
+                $team1->setPoint($team1->getPoint()+1);
+                $team2->setPoint($team2->getPoint()+1);
+                $team1->setGoals($team1->getGoals()+$match->getScore1());
+                $team2->setGoals($team2->getGoals()+$match->getScore2());
+            }
+            $teamRepository->save($team1);
+            $teamRepository->save($team2);
+            $entityManager->flush();
             return $this->redirectToRoute('app_matches_index', [], Response::HTTP_SEE_OTHER);
         }
 

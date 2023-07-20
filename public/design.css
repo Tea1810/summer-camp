@@ -1,0 +1,116 @@
+.no_link{
+    color: #DDFFF7;
+}
+.no_link:hover{
+    color: #F7DB17;
+}
+body {
+    background-color: #393E41;
+    color: #DDFFF7;
+}
+body th{
+    color: #DDFFF7;
+}
+body td{
+    color: #DDFFF7;
+}
+.custom-navbar .navbar-nav .nav-link{
+    color: #393E41;
+}
+.custom-navbar .navbar-nav .nav-link:hover{
+    color: #387E30;
+}
+.custom-navbar .navbar-brand {
+    color: #393E41;
+}
+.custom-navbar .navbar-brand:hover {
+    color: #393E41;
+}
+.custom-link-button {
+    display: inline-block;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    border-radius: 0.25rem;
+    color: #DDFFF7;
+    background-color: transparent;
+    border-color: #DDFFF7;
+}
+.custom-link-button-home {
+    display: inline-block;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    border-radius: 0.25rem;
+    color: #393E41;
+    background-color: transparent;
+    border-color: #DDFFF7;
+}
+.custom-link-button-home:hover {
+    display: inline-block;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    border-radius: 0.25rem;
+    color: #393E41;
+    background-color: transparent;
+    border-color: #DDFFF7;
+}
+.custom-link-button:hover {
+    color: #393E41;
+    border-color: #DDFFF7;
+    background-color:#DDFFF7;
+}
+.custom-navbar {
+    background-color: #DDFFF7;
+    border-color: #DDFFF7;
+
+}
+.custom-button {
+    background-color: transparent;
+    border-color: #DDFFF7;
+    background-image: none;
+    color: #DDFFF7;
+    margin-bottom: 30px;
+}
+.custom-navv{
+    position:fixed;
+    height:30px;
+}
+.custom-button-home-page {
+    background-color: #DDFFF7;
+    border-color: #DDFFF7;
+    background-image: none;
+    color: #393E41;
+    margin-bottom: 30px;
+}
+.custom-button:hover{
+    color: #393E41;
+    border-color: #DDFFF7;
+    background-color:#DDFFF7;
+}
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh; /* Adjust the height value to fit your requirements */
+}
+.centered-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
